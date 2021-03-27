@@ -1,13 +1,21 @@
 var gui = new dat.GUI();
 var params = {
-    y: 0,
+    y: 1,
+    x: 1,
+    h: 0,
+    w: 0,
     n: 1,
     m: 1,
+    scale: 0,
     Download_Image: function () { return save(); },
 };
-gui.add(params, "y", 0, 1, 0.001);
-gui.add(params, "n", 1, 20, 1);
-gui.add(params, "m", 1, 20, 1);
+gui.add(params, "y", 0, 20, 0.1);
+gui.add(params, "x", 0, 20, 0.1);
+gui.add(params, "h", 0, 1, 0.01);
+gui.add(params, "w", 0, 1, 0.01);
+gui.add(params, "n", 1, 20, 0.1);
+gui.add(params, "m", 1, 20, 0.1);
+gui.add(params, "scale", 0, 500, 0.1);
 gui.add(params, "Download_Image");
 function draw() {
     background(0);
@@ -16,12 +24,12 @@ function draw() {
     stroke(240);
     noFill();
     beginShape();
-    for (var a = 0; a < TWO_PI; a += 0.001) {
-        var x = cos(a * params.n);
-        var y = sin(a * params.m);
-        vertex(x * exp(-abs(y)) * height * 0.3, y * exp(-abs(x)) * height * 0.4);
+    for (var a = 0; a < TWO_PI; a += 0.0001) {
+        var x = -cos(a * params.x);
+        var y = -params.n * sin(a * params.m) * sin(a * params.m);
+        vertex(x * exp(-abs(y)) * params.w * params.scale, y * exp(-abs(x)) * params.h * params.scale);
     }
-    endShape(CLOSE);
+    endShape();
 }
 function setup() {
     p6_CreateCanvas();

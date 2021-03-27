@@ -7,14 +7,22 @@
 
 const gui = new dat.GUI()
 const params = {
-    y: 0,
+    y: 1,
+    x: 1,
+    h: 0,
+    w: 0,
     n: 1,
     m: 1,
+    scale : 0,
     Download_Image: () => save(),
 }
-gui.add(params, "y", 0, 1, 0.001)
-gui.add(params, "n", 1, 20, 1)
-gui.add(params, "m", 1, 20, 1)
+gui.add(params, "y", 0, 20, 0.1)
+gui.add(params, "x", 0, 20, 0.1)
+gui.add(params, "h", 0, 1, 0.01)
+gui.add(params, "w", 0, 1, 0.01)
+gui.add(params, "n", 1, 20, 0.1)
+gui.add(params, "m", 1, 20, 0.1)
+gui.add(params, "scale", 0, 500, 0.1)
 gui.add(params, "Download_Image")
 
 // -------------------
@@ -47,15 +55,30 @@ function draw() {
     }
     endShape(CLOSE)*/
 
-    beginShape()
-    for (let a=0; a<TWO_PI; a+= 0.001){
-        const x = cos (a * params.n) 
-        const y = sin(a * params.m)
-        vertex (x * exp(-abs(y)) * height *0.3, y* exp(-abs(x))* height * 0.4 )
-    }
-    endShape(CLOSE)
+    //Version ok 27.03
+    // beginShape()
+    // for (let a=0; a<TWO_PI; a+= 0.001){
+    //     const x = cos (a * params.x) 
+    //     const y = a * params.y - params.n * sin(a * params.m)
+    //     vertex (x * exp(-abs(y)) * params.w * params.scale, y * exp(-abs(x))* params.h * params.scale)
+    // }
+    // endShape()
 
-    
+    // beginShape()
+    // for (let a = 0; a<PI/4; a+= 0.001){
+    //     const x = cos(a)
+    //     const y = sin (a - PI/6) * sin (a - PI/6) 
+    //     vertex (x * height * 0.3, y * height * 0.3)
+    // }
+    // endShape()
+
+    beginShape()
+    for (let a=0; a<TWO_PI; a+= 0.0001){
+        const x =  - cos (a * params.x) 
+        const y =  - params.n * sin(a * params.m) * sin(a * params.m)
+        vertex (x * exp(-abs(y)) * params.w * params.scale, y * exp(-abs(x))* params.h * params.scale)
+    }
+    endShape()
 }
 
 // -------------------
