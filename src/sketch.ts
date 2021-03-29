@@ -62,7 +62,6 @@ function draw() {
         drawOrigin()
         stroke(0)
     }
-        
 
     if (params.bezier){
         motifBezier(1,-1)
